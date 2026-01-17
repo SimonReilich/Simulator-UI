@@ -1,0 +1,13 @@
+<div class="button-container">
+  @for (agent of agents; track agent) {
+    @if (agent.active) {
+    <button class="active" (click)="snipe(agent.id)">
+      {{ agent.id + 1 }}
+    </button>
+    } @else {
+    <button class="inactive" [disabled]="true">
+      {{ agent.id + 1 }}
+    </button>
+    }
+  }
+</div>

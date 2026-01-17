@@ -19,7 +19,7 @@ async fn main() {
         .fallback(static_handler);
 
     let addr = SocketAddr::from(([127, 0, 0, 1], 4444));
-    println!("[INFO] - Server started at http://{}", addr);
+    println!("\n[INFO] - Server started at http://{}", addr);
 
     let listener = tokio::net::TcpListener::bind(addr).await.unwrap();
     axum::serve(listener, app).await.unwrap();
@@ -69,15 +69,15 @@ async fn handle_socket(mut socket: WebSocket) {
                 // Do Nothing
             }
             Ok(None) => {
-                println!("[WARN] - WebSocket stream ended. Shutting down...");
+                println!("[WARN] - WebSocket stream ended. Shutting down...\n");
                 break;
             }
             Ok(Some(Err(e))) => {
-                println!("[ERRS] - WebSocket error: {}. Shutting down...", e);
+                println!("[ERRS] - WebSocket error: {}. Shutting down...\n", e);
                 break;
             }
             Err(_) => {
-                println!("[WARN] - Heartbeat timed out (no ping for 5s). Shutting down...");
+                println!("[WARN] - Heartbeat timed out (no ping for 5s). Shutting down...\n");
                 break;
             }
         }

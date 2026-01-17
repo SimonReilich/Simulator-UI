@@ -1,0 +1,54 @@
+mat-form-field {
+    width: calc(25vw - 5rem);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: calc(75vh - 5rem);
+    margin: 2.5rem;
+    color: var(--mat-sys-on-surface);
+}
+
+.container-bottom {
+    margin-inline: 2.5rem;
+    height: calc(25vh - 5rem);
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+p {
+    margin: 1rem;
+    margin-top: 2rem;
+}
+
+button {
+    border: none;
+    padding: 2.5rem;
+    width: calc(20vh - 2.5rem);
+    height: calc(20vh - 2.5rem);
+    border-radius: 2.5rem;
+}
+
+.start {
+    background-color: var(--mat-sys-primary);
+}
+
+.start:disabled,
+.start[disabled]{
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
+}
+
+.quit {
+    background-color: var(--mat-sys-error);
+}
+
+.quit:disabled,
+.quit[disabled]{
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
+}

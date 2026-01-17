@@ -1,0 +1,42 @@
+<div class="container">
+    <mat-form-field>
+        <mat-label>Wähle ein Protokoll aus</mat-label>
+        <mat-select [(value)]="selected">
+            <mat-option value="min">Min</mat-option>
+            <mat-option value="mod">Mod</mat-option>
+            <mat-option value="min-mod">Min-Mod</mat-option>
+            <mat-option value="monadic">Monadic</mat-option>
+        </mat-select>
+    </mat-form-field>
+
+    @switch (selected) {
+    @case ("min") {
+    <min-controls></min-controls>
+    }
+    @default {
+    <p>Fehler</p>
+    }
+    }
+
+    <mat-divider></mat-divider>
+
+    <p>Einstellungen:</p>
+
+    <mat-divider></mat-divider>
+
+    <p><mat-slide-toggle>Zufälliger Sniper</mat-slide-toggle></p>
+
+    <mat-form-field>
+        <mat-label>Seed (optional)</mat-label>
+        <input matInput placeholder="0" value="0" type="number">
+    </mat-form-field>
+</div>
+
+<div class="container-bottom">
+    <button class="start">
+        <mat-icon fontIcon="play_arrow"></mat-icon>
+    </button>
+    <button class="quit" disabled="true">
+        <mat-icon fontIcon="stop_circle"></mat-icon>
+    </button>
+</div>

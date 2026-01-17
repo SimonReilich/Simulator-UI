@@ -28,7 +28,7 @@
             version = "0.1.0";
             src = ./frontend;
 
-            npmDepsHash = "sha256-QLbdGXLhXw/C++UBIx1PN9MdFwYYoTGN5tK0wbgr7Ds=";
+            npmDepsHash = "sha256-1rQ5oxihIeJONeFcpPhMmVX0YGfxOuOMLvlhef6e8o8=";
 
             NG_CLI_ANALYTICS = "false";
             npmBuildScript = "build";
