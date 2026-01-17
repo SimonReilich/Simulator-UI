@@ -1,0 +1,7 @@
+<div class="console">
+    <div class="scrollable" #scrollContainer>
+    @for (message of messages; track $index) {
+        <div class="line" [innerHTML]="message"></div>
+    }
+    </div>
+</div>

@@ -4,6 +4,13 @@ button {
     width: calc(20vh - 2.5rem);
     height: calc(20vh - 2.5rem);
     border-radius: 2.5rem;
+    background-color: var(--mat-sys-secondary);
+}
+
+button:disabled,
+button[disabled]{
+    color: color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent);
+    background-color: color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
 }
 
 .button-container {
@@ -18,12 +25,4 @@ p {
     position: relative;
     left: 2.5rem;
     top: 0.5rem;
-}
-
-.active {
-    background-color: var(--mat-sys-secondary);
-}
-
-.inactive {
-    background-color: color-mix(in srgb, var(--mat-sys-on-surface) 12%, transparent);
 }

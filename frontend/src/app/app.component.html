@@ -4,13 +4,21 @@
         <mat-grid-tile [colspan]="tile.cols" [rowspan]="tile.rows" [style.background]="tile.color">
             @switch (tile.content) {
             @case ('main') {
-                <app-console></app-console>
+                <app-console #consoleRef></app-console>
             }
             @case ('side') {
-                <app-controls></app-controls>
+                <app-controls 
+                    (stateChange)="handleUpdate($event)"
+                    (startPressed)="handleStart($event)"
+                    (quitPressed)="handleQuit()">
+                </app-controls>
             }
             @case ('bottom') {
-                <app-sniper></app-sniper>
+                <app-sniper 
+                    #sniperRef
+                    [count]="agentCount" 
+                    [globalDisabled]="!isRunning">
+                </app-sniper>
             }
             @default {
             <p>Error!</p>

@@ -1,0 +1,11 @@
+<div class="button-container">
+  @for (agent of agents; track agent.id) {
+    <button 
+      [class.active]="agent.active"
+      [class.inactive]="!agent.active"
+      [disabled]="globalDisabled || !agent.active"
+      (click)="snipe(agent.id)">
+      {{ agent.id + 1 }}
+    </button>
+  }
+</div>
