@@ -27,8 +27,7 @@ export class ConsoleComponent implements OnDestroy {
     const htmlString = this.ansiUp.ansi_to_html(rawMsg);
     const safeMsg = this.sanitizer.bypassSecurityTrustHtml(htmlString);
     
-    this.messages = [...this.messages, safeMsg]; 
-    
+    this.messages = [...this.messages, safeMsg];
     this.shouldScrollToBottom = true;
   }
 

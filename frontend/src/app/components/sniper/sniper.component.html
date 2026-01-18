@@ -5,7 +5,17 @@
       [class.inactive]="!agent.active"
       [disabled]="globalDisabled || !agent.active"
       (click)="snipe(agent.id)">
-      {{ agent.id + 1 }}
+      {{ agent.id }}
     </button>
   }
 </div>
+
+@if (!globalDisabled && !(_count === 0)) {
+  <button matFab class="skip">
+    <mat-icon (click)="snipe(0)">skip_next</mat-icon>
+  </button>
+
+  <button matFab class="skip_end">
+    <mat-icon (click)="snipe(-1)">fast_forward</mat-icon>
+  </button>
+}

@@ -8,6 +8,7 @@
             }
             @case ('side') {
                 <app-controls 
+                    #controlRef
                     (stateChange)="handleUpdate($event)"
                     (startPressed)="handleStart($event)"
                     (quitPressed)="handleQuit()">
@@ -17,7 +18,7 @@
                 <app-sniper 
                     #sniperRef
                     [count]="agentCount" 
-                    [globalDisabled]="!isRunning">
+                    [globalDisabled]="manual">
                 </app-sniper>
             }
             @default {

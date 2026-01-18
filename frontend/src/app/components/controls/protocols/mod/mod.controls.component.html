@@ -1,0 +1,11 @@
+<p>Anzahl Agenten x:</p>
+<mat-slider min="1" max="10" step="1" showTickMarks discrete>
+  <input matSliderThumb (valueChange)="onAgentsChange($event)">
+</mat-slider>
+
+<mat-divider></mat-divider>
+
+<p>Modulo m:</p>
+<mat-slider min="2" max="10" step="1" showTickMarks discrete>
+  <input matSliderThumb (valueChange)="onModChange($event)">
+</mat-slider>

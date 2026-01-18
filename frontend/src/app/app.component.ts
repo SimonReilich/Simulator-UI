@@ -23,14 +23,17 @@ export class AppComponent implements OnInit, OnDestroy {
   currentProtocol: string = '';
   currentData = new Map();
   isRunning = false;
+  manual = false;
   agentCount = 0;
+
+  @ViewChild('controlRef') controlComponent!: ControlsComponent;
 
   constructor(private cmdService: CommandService) {
     this.cmdService.output$.subscribe(line => {
-      this.logData(line);
-      
       if (line.includes('[Process Finished]')) {
-        this.isRunning = false;
+        this.controlComponent.onQuit();
+      } else {
+        this.logData(line);
       }
     });
   }
@@ -50,6 +53,7 @@ export class AppComponent implements OnInit, OnDestroy {
   handleUpdate(state: { protocol: string, data: Map<string, any> }) {
     this.currentProtocol = state.protocol;
     this.currentData = state.data;
+    this.manual = !this.isRunning || this.currentData.get('randomSniper');
   }
 
   handleStart(state: { protocol: string, data: Map<string, any> }) {
@@ -58,11 +62,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.currentData = state.data;
     this.agentCount = this.currentData.get('x');
     this.clearLogs();
-
-    console.log('Simulation started!');
-    console.log('Protocol:', this.currentProtocol);
-    console.log('Value x:', this.currentData.get('x'));
-    console.log('Value c:', this.currentData.get('c'));
+    this.manual = !this.isRunning || this.currentData.get('randomSniper');
 
     let req = this.cmdService.to_sim_request(this.currentProtocol, this.currentData);
     if (req != null) {
@@ -72,13 +72,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
   handleQuit() {
     this.isRunning = false;
+    this.manual = !this.isRunning || this.currentData.get('randomSniper');
     console.log('Simulation stopped.');
     this.sniper.resetAll();
+    this.cmdService.stopSimulation();
   }
 
   tiles: Tile[] = [
     {content: 'main', cols: 3, rows: 4, color: 'var(--mat-sys-surface)'},
-    {content: 'side', cols: 1, rows: 5, color: 'var(--mat-sys-surface-variant)'},
+    {content: 'side', cols: 1, rows: 5, color: 'var(--mat-sys-surface-container-highest)'},
     {content: 'bottom', cols: 3, rows: 1, color: 'var(--mat-sys-surface)'},
   ];
 

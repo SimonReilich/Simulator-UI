@@ -1,7 +1,7 @@
 button {
     border: none;
     padding: 2.5rem;
-    width: calc(20vh - 2.5rem);
+    flex-grow: 1;
     height: calc(20vh - 2.5rem);
     border-radius: 2.5rem;
     background-color: var(--mat-sys-secondary);
@@ -25,4 +25,20 @@ p {
     position: relative;
     left: 2.5rem;
     top: 0.5rem;
+}
+
+.skip_end {
+    width: 7.5rem;
+    height: 7.5rem;
+    position: absolute;
+    right: 5rem;
+    top: -12.5rem;
+}
+
+.skip {
+    width: 7.5rem;
+    height: 7.5rem;
+    position: absolute;
+    right: 15rem;
+    top: -12.5rem;
 }

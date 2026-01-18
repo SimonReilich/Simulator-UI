@@ -1,6 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { CommandService } from '../../services/command.service';
 
 export interface AgentSnipe {
   id: number;
@@ -22,22 +23,25 @@ export class SniperComponent {
     this.resetAll();
   }
   
-  private _count = 2;
+  _count = 0;
   agents: AgentSnipe[] = [];
 
-  constructor() {
+  constructor(private cmdService: CommandService) {
     this.resetAll();
   }
 
   snipe(id: number) {
-    if (this.agents[id]) {
-      this.agents[id] = { ...this.agents[id], active: false };
+    if (id > 0 && this.agents[id - 1]) {
+      this.agents[id - 1] = { ...this.agents[id - 1], active: false };
+      this.cmdService.sendManualInput(`${id}`);
+    } else {
+      this.cmdService.sendManualInput(`${id}`);
     }
   }
 
   public resetAll() {
     this.agents = Array.from({ length: this._count }, (_, i) => ({
-      id: i,
+      id: i + 1,
       active: true
     }));
   }

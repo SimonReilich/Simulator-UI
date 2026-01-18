@@ -1,18 +1,18 @@
 use axum::{
+    Router,
     body::Body,
     extract::ws::{Message, WebSocket, WebSocketUpgrade},
-    http::{header, Response, StatusCode},
+    http::{Response, StatusCode, header},
     response::IntoResponse,
     routing::get,
-    Router,
 };
-use include_dir::{include_dir, Dir};
+use include_dir::{Dir, include_dir};
 use serde::Deserialize;
 use std::net::SocketAddr;
 use std::process::Stdio;
-use tokio::io::{AsyncBufReadExt, BufReader};
+use tokio::io::{AsyncBufReadExt, AsyncWriteExt, BufReader};
 use tokio::process::Command;
-use tokio::time::{timeout, Duration};
+use tokio::time::{Duration, timeout};
 
 static FRONTEND_DIR: Dir<'_> = include_dir!("$FRONTEND_DIST");
 
@@ -62,26 +62,38 @@ struct SimRequest {
 }
 
 async fn handle_socket(mut socket: WebSocket) {
-    println!("[INFO] - WebSocket connected.");
+    let mut is_heartbeat = true;
 
     loop {
         let msg = match timeout(Duration::from_secs(60), socket.recv()).await {
             Ok(Some(Ok(m))) => m,
             Ok(None) => {
-                println!("[WARN] - WebSocket closed by client. Shutting down...");
+                if is_heartbeat {
+                    println!("[WARN] - WebSocket closed by client. Shutting down...");
+                    break;
+                }
                 break;
             }
             Ok(Some(Err(e))) => {
-                println!("[ERR] - WebSocket error: {}. Shutting down...", e);
+                if is_heartbeat {
+                    println!("[ERR] - WebSocket error: {}. Shutting down...", e);
+                    break;
+                }
                 break;
             }
             Err(_) => {
-                println!("[WARN] - Connection timed out. Shutting down...");
+                if is_heartbeat {
+                    println!("[WARN] - Connection timed out. Shutting down...");
+                    break;
+                }
                 break;
             }
         };
 
         if let Message::Text(text) = msg {
+            if !text.contains("ping") {
+                is_heartbeat = false;
+            }
             let req: SimRequest = match serde_json::from_str(&text) {
                 Ok(r) => r,
                 Err(_) => {
@@ -89,7 +101,10 @@ async fn handle_socket(mut socket: WebSocket) {
                 }
             };
 
-            println!("[INFO] - Starting simulation: {} {}", req.protocol, req.args);
+            println!(
+                "[INFO] - Starting simulation: {} {}",
+                req.protocol, req.args
+            );
 
             let mut cmd = Command::new("stdbuf");
             cmd.arg("-oL");
@@ -98,45 +113,56 @@ async fn handle_socket(mut socket: WebSocket) {
             for arg in req.args.split_whitespace() {
                 cmd.arg(arg);
             }
+            cmd.stdin(Stdio::piped());
             cmd.stdout(Stdio::piped());
-            
-            let mut child = match cmd.spawn() {
-                Ok(c) => c,
-                Err(e) => {
-                    let _ = socket.send(Message::Text(format!("Failed to spawn tool: {}", e))).await;
-                    continue;
-                }
-            };
 
+            let mut child = cmd.spawn().expect("Failed to spawn");
             let stdout = child.stdout.take().expect("Failed to capture stdout");
+            let mut stdin = child.stdin.take().expect("Failed to capture stdin"); // Get stdin handle
             let mut reader = BufReader::new(stdout).lines();
 
             loop {
                 tokio::select! {
+                    // Output from the CLI tool to the Browser
                     line_res = reader.next_line() => {
                         match line_res {
                             Ok(Some(line)) => {
                                 if socket.send(Message::Text(line)).await.is_err() {
-                                    println!("[WARN] - Client disconnected during stream.");
                                     let _ = child.kill().await;
-                                    std::process::exit(0); 
+                                    return;
                                 }
                             }
                             Ok(None) => break,
-                            Err(e) => {
-                                let _ = socket.send(Message::Text(format!("Stream error: {}", e))).await;
-                                break;
+                            Err(_) => break,
+                        }
+                    }
+                    // Input from the Browser to the CLI tool
+                    msg_res = socket.recv() => {
+                        match msg_res {
+                            Some(Ok(Message::Text(input))) => {
+                                // Forward the text from the frontend directly to the tool's stdin
+                                if let Err(e) = stdin.write_all(format!("{}\n", input).as_bytes()).await {
+                                    println!("[ERR] Failed to write to stdin: {}", e);
+                                }
+                            }
+                            _ => {
+                                println!("[INFO] Client disconnected. Killing simulation...");
+                                let _ = child.kill().await;
+                                return;
                             }
                         }
                     }
-                    _ = socket.recv() => {
-
-                    }
                 }
             }
-            let _ = socket.send(Message::Text("\n[Process Finished]".to_string())).await;
+            let _ = socket
+                .send(Message::Text("\n[Process Finished]".to_string()))
+                .await;
         }
     }
 
-    std::process::exit(0);
+    if is_heartbeat {
+        std::process::exit(0);
+    } else {
+        println!("[INFO] - Simulation finished, closing connection")
+    }
 }

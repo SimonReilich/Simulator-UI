@@ -1,3 +1,5 @@
+/* console.component.css */
+
 .console {
     background-color: var(--mat-sys-surface-container-highest);
     width: calc(75vw - 10rem);
@@ -15,11 +17,11 @@
     overflow-y: auto;
     display: flex;
     flex-direction: column;
+    height: 100%; 
     max-height: calc(80vh - 10rem);
 
     mask-image: linear-gradient(to bottom, transparent 0%, black 12.5%);
     scroll-behavior: smooth;
-
 }
 
 .scrollable::-webkit-scrollbar {
@@ -30,9 +32,9 @@
     background: var(--mat-sys-secondary);
     border-radius: 10px;
 }
-
 .line:first-child {
     margin-top: auto;
+    padding-top: 15%; 
 }
 
 .line {

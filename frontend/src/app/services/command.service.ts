@@ -6,6 +6,10 @@ export interface SimRequest {
   args: string;
 }
 
+function getRandomInt(max: number) {
+  return Math.floor(Math.random() * max);
+}
+
 @Injectable({
   providedIn: 'root'
 })
@@ -16,9 +20,11 @@ export class CommandService {
   public output$ = this.outputSubject.asObservable();
 
   runSimulation(request: SimRequest): void {
+    this.stopSimulation();
+
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const host = window.location.host;
-    
+
     this.socket = new WebSocket(`${protocol}//${host}/ws`);
 
     this.socket.onopen = () => {
@@ -30,7 +36,7 @@ export class CommandService {
     };
 
     this.socket.onclose = (event) => {
-      this.outputSubject.next('\n[Connection Closed]');
+      this.outputSubject.next('');
       this.socket = null;
     };
 
@@ -47,12 +53,29 @@ export class CommandService {
     }
   }
 
-  to_sim_request(protocol: string, args: Map<any, any>) {
-  switch (protocol) {
-    case 'min':
-      return { protocol: 'cut', args: `-d 0.5 -n ${args.get('x')} ${args.get('c')}`};
-    default:
-      return null;
+  sendManualInput(input: string): void {
+    if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+      this.socket.send(input);
+    }
   }
-}
+
+  to_sim_request(protocol: string, args: Map<any, any>) {
+    const extraArgs = args.get('randomSniper') ? `-s ${args.get('p')} -d 0.5 ` : '-m ';
+    const seedArg = args.get('seed') != null ? `-r ${args.get('seed')} ` : `-r ${getRandomInt(1000000)} `;
+
+    switch (protocol) {
+      case 'min':
+        return {
+          protocol: 'cut',
+          args: `${extraArgs}${seedArg}-n ${args.get('x')} ${args.get('c')}`
+        };
+      case 'mod':
+        return {
+          protocol: 'mod',
+          args: `${extraArgs}${seedArg}-n ${args.get('x')} ${args.get('m')}`
+        }
+      default:
+        return null;
+    }
+  }
 }
