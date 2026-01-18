@@ -24,11 +24,13 @@ export class ConsoleComponent implements OnDestroy {
   }
 
   public appendMessage(rawMsg: string): void {
-    const htmlString = this.ansiUp.ansi_to_html(rawMsg);
-    const safeMsg = this.sanitizer.bypassSecurityTrustHtml(htmlString);
-    
-    this.messages = [...this.messages, safeMsg];
-    this.shouldScrollToBottom = true;
+    if (!rawMsg.includes('Agent to be sniped:')) {
+      const htmlString = this.ansiUp.ansi_to_html(rawMsg);
+      const safeMsg = this.sanitizer.bypassSecurityTrustHtml(htmlString);
+      
+      this.messages = [...this.messages, safeMsg];
+      this.shouldScrollToBottom = true;
+    }
   }
 
   ngAfterViewChecked() {

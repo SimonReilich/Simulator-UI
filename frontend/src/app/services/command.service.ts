@@ -74,6 +74,16 @@ export class CommandService {
           protocol: 'mod',
           args: `${extraArgs}${seedArg}-n ${args.get('x')} ${args.get('m')}`
         }
+      case 'min-mod':
+        return {
+          protocol: 'cmb',
+          args: `${extraArgs}${seedArg}-n ${args.get('x')} ${args.get('m')} ${args.get('c')}`
+        }
+      case 'monadic':
+        return {
+          protocol: 'p',
+          args: `${extraArgs}${seedArg}-n ${args.get('x1')} ${args.get('m1')} ${args.get('c1')} ${args.get('x2')} ${args.get('m2')} ${args.get('c2')}`
+        }
       default:
         return null;
     }

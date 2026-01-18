@@ -9,6 +9,8 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSliderModule } from '@angular/material/slider';
 import { ModControlsComponent } from './protocols/mod/mod.controls.component';
+import { CmbControlsComponent } from './protocols/cmb/cmb.controls.component';
+import { MdcControlsComponent } from './protocols/mdc/mdc.controls.component';
 
 export interface ControlState {
   protocol: string;
@@ -17,7 +19,7 @@ export interface ControlState {
 
 @Component({
   selector: 'app-controls',
-  imports: [MatIconModule, FormsModule, MatInputModule, MatSlideToggleModule, MatDividerModule, MatFormFieldModule, MatSelectModule, MinControlsComponent, ModControlsComponent, MatSliderModule],
+  imports: [MatIconModule, FormsModule, MatInputModule, MatSlideToggleModule, MatDividerModule, MatFormFieldModule, MatSelectModule, MdcControlsComponent, MinControlsComponent, ModControlsComponent, MatSliderModule, CmbControlsComponent],
   templateUrl: './controls.component.html',
   styleUrl: './controls.component.css'
 })
@@ -35,13 +37,6 @@ export class ControlsComponent implements OnInit {
 
   updateMap(key: string, value: any) {
     this.map.set(key, value);
-    this.notifyParent();
-  }
-
-  resetMap() {
-    this.map.clear();
-    this.map.set('randomSniper', this.isRandomSniper);
-    this.map.set('seed', this.seedValue);
     this.notifyParent();
   }
 
@@ -66,6 +61,54 @@ export class ControlsComponent implements OnInit {
       this.map.set("m", val);
       this.notifyParent();
       console.log('Map updated with m:', val);
+    }
+  }
+
+  handleAgents1Change(val: number) {
+    if (val !== undefined) {
+      this.map.set("x1", val);
+      this.notifyParent();
+      console.log('Map updated with x1:', val);
+    }
+  }
+
+  handleMax1Change(val: number) {
+    if (val !== undefined) {
+      this.map.set("c1", val);
+      this.notifyParent();
+      console.log('Map updated with c1:', val);
+    }
+  }
+
+  handleMod1Change(val: number) {
+    if (val !== undefined) {
+      this.map.set("m1", val);
+      this.notifyParent();
+      console.log('Map updated with m1:', val);
+    }
+  }
+
+  handleAgents2Change(val: number) {
+    if (val !== undefined) {
+      this.map.set("x2", val);
+      this.notifyParent();
+      console.log('Map updated with x2:', val);
+    }
+  }
+
+  handleMax2Change(val: number) {
+    if (val !== undefined) {
+      this.map.set("c2", val);
+      this.notifyParent();
+      console.log('Map updated with c2:', val);
+    }
+  }
+
+  handleMod2Change(val: number) {
+    if (val !== undefined) {
+      this.map.set("m2", val);
+      this.notifyParent();
+      console.log('Map updated with m2:', val);
     }
   }
 
@@ -102,6 +145,12 @@ export class ControlsComponent implements OnInit {
     this.map.set("x", 1);
     this.map.set("c", 2);
     this.map.set("m", 2);
+    this.map.set("x1", 1);
+    this.map.set("c1", 2);
+    this.map.set("m1", 2);
+    this.map.set("x2", 1);
+    this.map.set("c2", 2);
+    this.map.set("m2", 2);
     this.map.set("randomSniper", this.isRandomSniper);
     this.map.set("p", 0.2);
     this.map.set("seed", this.seedValue);

@@ -1,0 +1,16 @@
+mat-slider {
+    width: calc((25vw - 10rem) / 2);
+}
+
+p {
+    margin: 1rem;
+}
+
+mat-divider {
+    margin-block: 1rem;
+}
+
+.container {
+    display: flex;
+    gap: 2.5rem;
+}

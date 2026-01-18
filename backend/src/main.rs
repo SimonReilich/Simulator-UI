@@ -118,12 +118,11 @@ async fn handle_socket(mut socket: WebSocket) {
 
             let mut child = cmd.spawn().expect("Failed to spawn");
             let stdout = child.stdout.take().expect("Failed to capture stdout");
-            let mut stdin = child.stdin.take().expect("Failed to capture stdin"); // Get stdin handle
+            let mut stdin = child.stdin.take().expect("Failed to capture stdin");
             let mut reader = BufReader::new(stdout).lines();
 
             loop {
                 tokio::select! {
-                    // Output from the CLI tool to the Browser
                     line_res = reader.next_line() => {
                         match line_res {
                             Ok(Some(line)) => {
@@ -136,11 +135,9 @@ async fn handle_socket(mut socket: WebSocket) {
                             Err(_) => break,
                         }
                     }
-                    // Input from the Browser to the CLI tool
                     msg_res = socket.recv() => {
                         match msg_res {
                             Some(Ok(Message::Text(input))) => {
-                                // Forward the text from the frontend directly to the tool's stdin
                                 if let Err(e) = stdin.write_all(format!("{}\n", input).as_bytes()).await {
                                     println!("[ERR] Failed to write to stdin: {}", e);
                                 }

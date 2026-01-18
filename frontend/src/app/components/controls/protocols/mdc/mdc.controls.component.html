@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="left">
+    <p>Anzahl Agenten x1:</p>
+    <mat-slider min="1" max="5" step="1" showTickMarks discrete>
+      <input matSliderThumb (valueChange)="onAgents1Change($event)">
+    </mat-slider>
+
+    <p>Maximum c1:</p>
+    <mat-slider min="2" max="5" step="1" showTickMarks discrete>
+      <input matSliderThumb (valueChange)="onMax1Change($event)">
+    </mat-slider>
+
+    <p>Modulo m1:</p>
+    <mat-slider min="2" max="5" step="1" showTickMarks discrete>
+      <input matSliderThumb (valueChange)="onMod1Change($event)">
+    </mat-slider>
+  </div>
+  <div class="right">
+    <p>Anzahl Agenten x2:</p>
+    <mat-slider min="1" max="5" step="1" showTickMarks discrete>
+      <input matSliderThumb (valueChange)="onAgents2Change($event)">
+    </mat-slider>
+
+    <p>Maximum c2:</p>
+    <mat-slider min="2" max="5" step="1" showTickMarks discrete>
+      <input matSliderThumb (valueChange)="onMax2Change($event)">
+    </mat-slider>
+
+    <p>Modulo m2:</p>
+    <mat-slider min="2" max="5" step="1" showTickMarks discrete>
+      <input matSliderThumb (valueChange)="onMod2Change($event)">
+    </mat-slider>
+  </div>
+</div>

@@ -1,5 +1,3 @@
-/* console.component.css */
-
 .console {
     background-color: var(--mat-sys-surface-container-highest);
     width: calc(75vw - 10rem);

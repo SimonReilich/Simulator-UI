@@ -60,7 +60,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isRunning = true;
     this.currentProtocol = state.protocol;
     this.currentData = state.data;
-    this.agentCount = this.currentData.get('x');
+    if (this.currentProtocol === 'monadic') {
+      this.agentCount = this.currentData.get('x1') + this.currentData.get('x2');
+    } else {
+      this.agentCount = this.currentData.get('x');
+    }
     this.clearLogs();
     this.manual = !this.isRunning || this.currentData.get('randomSniper');
 
