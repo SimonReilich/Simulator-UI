@@ -18,11 +18,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1767892417,
-        "narHash": "sha256-dhhvQY67aboBk8b0/u0XB6vwHdgbROZT3fJAjyNh5Ww=",
+        "lastModified": 1768564909,
+        "narHash": "sha256-Kell/SpJYVkHWMvnhqJz/8DqQg2b6PguxVWOuadbHCc=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "3497aa5c9457a9d88d71fa93a4a8368816fbeeba",
+        "rev": "e4bae1bd10c9c57b2cf517953ab70060a828ee6f",
         "type": "github"
       },
       "original": {
@@ -37,11 +37,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1768689182,
-        "narHash": "sha256-iG08TJ9I2xKJtwMJlCb60gzjUDK3ZwmLVJZMsT8Oq+U=",
+        "lastModified": 1768692501,
+        "narHash": "sha256-lX8xMl9MfHM9/R8lpBmTGnThx4s8VzhbbhSXq4y4mvQ=",
         "owner": "SimonReilich",
         "repo": "PopProtoSim-Neo",
-        "rev": "cde74e44366e825ed42e7e990b9dc0a922be62b4",
+        "rev": "7930b7d76b71607cfecd46671ab8aa2f595bdd33",
         "type": "github"
       },
       "original": {
