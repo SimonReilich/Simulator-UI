@@ -64,6 +64,11 @@ export class CommandService {
     const seedArg = args.get('seed') != null ? `-r ${args.get('seed')} ` : `-r ${getRandomInt(1000000)} `;
 
     switch (protocol) {
+      case 'maj':
+        return {
+          protocol: 'maj',
+          args: `${extraArgs}${seedArg}-n ${args.get('x1')} ${args.get('x2')}`
+        }
       case 'pbl':
         return {
           protocol: 'pbl',

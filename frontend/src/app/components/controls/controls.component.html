@@ -6,6 +6,7 @@
     <mat-form-field>
         <mat-label>Wähle ein Protokoll aus</mat-label>
         <mat-select [(value)]="selected">
+            <mat-option value="maj">Majority</mat-option>
             <mat-option value="pbl">Pebble</mat-option>
             <mat-option value="min">Min</mat-option>
             <mat-option value="mod">Mod</mat-option>
@@ -17,6 +18,9 @@
     <mat-divider></mat-divider>
 
     @switch (selected) {
+    @case ("maj") {
+        <maj-controls (agents1Changed)="handleAgents1Change($event)" (agents2Changed)="handleAgents2Change($event)"></maj-controls>
+    }
     @case ("pbl") {
         <pbl-controls (agentsChanged)="handleAgentsChange($event)" (maxChanged)="handleMaxChange($event)"></pbl-controls>
     }

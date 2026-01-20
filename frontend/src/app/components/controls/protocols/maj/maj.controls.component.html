@@ -1,0 +1,9 @@
+<p>Anzahl Agenten x:</p>
+<mat-slider min="1" max="10" step="1" showTickMarks discrete>
+  <input matSliderThumb (valueChange)="onAgents1Change($event)">
+</mat-slider>
+
+<p>Anzahl Agenten y:</p>
+<mat-slider min="1" max="10" step="1" showTickMarks discrete>
+  <input matSliderThumb (valueChange)="onAgents2Change($event)">
+</mat-slider>

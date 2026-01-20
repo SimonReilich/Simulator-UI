@@ -12,6 +12,7 @@ import { ModControlsComponent } from './protocols/mod/mod.controls.component';
 import { CmbControlsComponent } from './protocols/cmb/cmb.controls.component';
 import { MdcControlsComponent } from './protocols/mdc/mdc.controls.component';
 import { PblControlsComponent } from './protocols/pbl/pbl.controls.component';
+import { MajControlsComponent } from './protocols/maj/maj.controls.component';
 
 export interface ControlState {
   protocol: string;
@@ -20,7 +21,7 @@ export interface ControlState {
 
 @Component({
   selector: 'app-controls',
-  imports: [MatIconModule, PblControlsComponent, FormsModule, MatInputModule, MatSlideToggleModule, MatDividerModule, MatFormFieldModule, MatSelectModule, MdcControlsComponent, MinControlsComponent, ModControlsComponent, MatSliderModule, CmbControlsComponent],
+  imports: [MatIconModule, PblControlsComponent, FormsModule, MatInputModule, MatSlideToggleModule, MatDividerModule, MatFormFieldModule, MatSelectModule, MdcControlsComponent, MinControlsComponent, ModControlsComponent, MatSliderModule, CmbControlsComponent, MajControlsComponent],
   templateUrl: './controls.component.html',
   styleUrl: './controls.component.css'
 })

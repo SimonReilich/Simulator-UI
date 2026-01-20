@@ -37,11 +37,11 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1768692501,
-        "narHash": "sha256-lX8xMl9MfHM9/R8lpBmTGnThx4s8VzhbbhSXq4y4mvQ=",
+        "lastModified": 1768935912,
+        "narHash": "sha256-ptkr6MpscLmNuQYX3HtyVmSUfR2SRqsOOOBSKeog3Ss=",
         "owner": "SimonReilich",
         "repo": "PopProtoSim-Neo",
-        "rev": "7930b7d76b71607cfecd46671ab8aa2f595bdd33",
+        "rev": "0c74adee532c74e4496999aa4ff1e1f5b8a3e3a5",
         "type": "github"
       },
       "original": {

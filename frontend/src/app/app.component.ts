@@ -60,7 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isRunning = true;
     this.currentProtocol = state.protocol;
     this.currentData = state.data;
-    if (this.currentProtocol === 'monadic') {
+    if (this.currentProtocol === 'monadic' || this.currentProtocol === 'maj') {
       this.agentCount = this.currentData.get('x1') + this.currentData.get('x2');
     } else {
       this.agentCount = this.currentData.get('x');
