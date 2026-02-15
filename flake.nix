@@ -27,12 +27,24 @@
             pname = "protosim-ui-frontend";
             version = "0.1.0";
             src = ./frontend;
+
             npmDepsHash = "sha256-OAt1ODCRxerWdbYlsaZrNl6b48zKe8r0n9fQ9TzGQwU=";
+
             NG_CLI_ANALYTICS = "false";
+
             npmBuildScript = "build";
+            
             installPhase = ''
-              mkdir -p $out
-              cp -r dist/frontend/browser/* $out/
+              mkdir -p $out/share/www
+              cp -r dist/protosim-ui-frontend/browser/* $out/share/www
+              
+              mkdir -p $out/bin
+              cat <<EOF > $out/bin/protosim-ui-frontend
+              #!/bin/sh
+              echo "Starting server at http://localhost:8080"
+              ${pkgs.python3}/bin/python3 -m http.server 8080 --directory $out/share/www
+              EOF
+              chmod +x $out/bin/protosim-ui-frontend
             '';
           };
         in
@@ -108,9 +120,8 @@
             buildInputs = with pkgs; [
               cargo
               rustc
-              nodejs_20
+              nodejs_24
               nodePackages.npm
-              nodePackages."@angular/cli"
               pkg-config
               openssl
               popprotosim.packages.${system}.default
