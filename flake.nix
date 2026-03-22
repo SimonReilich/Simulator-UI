@@ -36,7 +36,7 @@
             
             installPhase = ''
               mkdir -p $out/share/www
-              cp -r dist/protosim-ui-frontend/browser/* $out/share/www
+              cp -r dist/frontend/browser/* $out/share/www
               
               mkdir -p $out/bin
               cat <<EOF > $out/bin/protosim-ui-frontend
@@ -54,7 +54,7 @@
             version = "0.1.0";
             src = ./backend;
             cargoHash = "sha256-p2OMDyr/URGBEyDeEYCWBDRBN0jUKy0SlvX+BQ4cbBU=";
-            FRONTEND_DIST = "${frontend}";
+            FRONTEND_DIST = "${frontend}/share/www";
 
             nativeBuildInputs = [ pkgs.pkg-config ];
             buildInputs = [ pkgs.openssl ];
