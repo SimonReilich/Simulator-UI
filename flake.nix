@@ -1,9 +1,9 @@
 {
-  description = "UI for PopProtoSim-Neo";
+  description = "UI for proto-sim";
 
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    popprotosim.url = "github:SimonReilich/PopProtoSim-Neo";
+    popprotosim.url = "github:SimonReilich/proto-sim";
   };
 
   outputs = { self, nixpkgs, popprotosim }:
@@ -24,8 +24,8 @@
           simulator = popprotosim.packages.${system}.default;
 
           frontend = pkgs.buildNpmPackage {
-            pname = "protosim-ui-frontend";
-            version = "0.1.0";
+            pname = "proto-sim-gui-frontend";
+            version = "v1.0.0";
             src = ./frontend;
 
             npmDepsHash = "sha256-OAt1ODCRxerWdbYlsaZrNl6b48zKe8r0n9fQ9TzGQwU=";
@@ -50,8 +50,8 @@
         in
         {
           default = pkgs.rustPlatform.buildRustPackage {
-            pname = "protosim-ui";
-            version = "0.1.0";
+            pname = "proto-sim-gui";
+            version = "v1.0.0";
             src = ./backend;
             cargoHash = "sha256-p2OMDyr/URGBEyDeEYCWBDRBN0jUKy0SlvX+BQ4cbBU=";
             FRONTEND_DIST = "${frontend}/share/www";
@@ -105,7 +105,7 @@
             type = "app";
             program = "${runScript}/bin/run-simulation";
             meta = {
-              description = "protosim-ui is a ui wrapper for popprotosim-neo";
+              description = "proto-sim-gui is a ui wrapper for proto-sim";
             };
           };
         }
